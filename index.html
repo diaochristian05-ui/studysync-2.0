@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#174c3c">
+  <meta name="description" content="StudySync 2.0 — your cozy space to organize tasks, deadlines, and study progress.">
+  <title>StudySync 2.0 | Student Planner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- LOGIN AND SIGN-UP SCREEN -->
+  <section id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+
+      <div class="auth-brand">
+        <div class="auth-brand-icon">📚</div>
+        <h1>StudySync <span>2.0</span></h1>
+        <p>Your cozy study corner</p>
+      </div>
+
+      <div class="auth-decoration">☕ ✦ 📖</div>
+
+      <div class="auth-heading">
+        <h2 id="auth-title">Welcome back!</h2>
+        <p id="auth-subtitle">Sign in to continue your study journey.</p>
+      </div>
+
+      <form id="login-form" class="auth-form">
+        <label for="login-username">Username</label>
+        <input
+          type="text"
+          id="login-username"
+          placeholder="Enter your username"
+          autocomplete="username"
+          maxlength="30"
+          required
+        >
+
+        <label for="login-password">Password</label>
+        <input
+          type="password"
+          id="login-password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          required
+        >
+
+        <p id="login-error" class="auth-message" role="alert"></p>
+
+        <button type="submit" class="auth-submit">
+          Sign In
+        </button>
+
+        <p class="auth-switch">
+          Don't have an account?
+          <button type="button" id="show-signup">Create one</button>
+        </p>
+      </form>
+
+      <form id="signup-form" class="auth-form" hidden>
+        <label for="signup-username">Choose a username</label>
+        <input
+          type="text"
+          id="signup-username"
+          placeholder="3–30 characters"
+          autocomplete="username"
+          minlength="3"
+          maxlength="30"
+          pattern="[A-Za-z0-9_-]+"
+          title="Use letters, numbers, underscores, or hyphens."
+          required
+        >
+
+        <label for="signup-password">Create a password</label>
+        <input
+          type="password"
+          id="signup-password"
+          placeholder="At least 8 characters"
+          autocomplete="new-password"
+          minlength="8"
+          required
+        >
+
+        <label for="signup-confirm-password">Confirm password</label>
+        <input
+          type="password"
+          id="signup-confirm-password"
+          placeholder="Enter your password again"
+          autocomplete="new-password"
+          minlength="8"
+          required
+        >
+
+        <p id="signup-error" class="auth-message" role="alert"></p>
+
+        <button type="submit" class="auth-submit">
+          Create Account
+        </button>
+
+        <p class="auth-switch">
+          Already have an account?
+          <button type="button" id="show-login">Sign in</button>
+        </p>
+      </form>
+
+      <p class="auth-footer">
+        🌿 A little progress every day.
+      </p>
+    </div>
+  </section>
+
+  <!-- ORIGINAL STUDYSYNC 2.0 PLANNER -->
+  <div class="app-shell">
+
+    <aside class="sidebar" id="sidebar">
+      <a href="#" class="brand" aria-label="StudySync 2.0 home" data-go="dashboard">
+        <span class="brand-icon">📚</span>
+        <span class="brand-copy">
+          <strong>StudySync <span>2.0</span></strong>
+          <small>Your cozy study corner</small>
+        </span>
+      </a>
+
+      <div class="sidebar-label">STUDY SPACE</div>
+
+      <nav class="navigation" aria-label="Main navigation">
+        <button class="nav-link active" data-view="dashboard">
+          <span>⌂</span> Dashboard
+        </button>
+        <button class="nav-link" data-view="tasks">
+          <span>☷</span> My Tasks
+        </button>
+        <button class="nav-link" data-view="deadlines">
+          <span>◷</span> Deadlines
+        </button>
+        <button class="nav-link" data-view="calendar">
+          <span>▦</span> Study Calendar
+        </button>
+        <button class="nav-link" data-view="progress">
+          <span>↗</span> My Progress
+        </button>
+      </nav>
+
+      <div class="sidebar-note">
+        <div class="note-illustration">☕</div>
+        <strong>A little progress every day.</strong>
+        <p>Your goals are worth showing up for. Take it one task at a time.</p>
+      </div>
+
+      <div class="sidebar-footer">
+        <span class="status-dot"></span>
+        <span>StudySync 2.0</span>
+        <span class="version-label">v2.0</span>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">YOUR PERSONAL STUDY PLANNER</p>
+          <h1 id="page-title">Welcome back, learner ✦</h1>
+          <p class="today-label" id="today-label"></p>
+          <p class="account-label">Signed in as <strong id="current-account-label">Learner</strong></p>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="icon-button" id="notification-shortcut" title="Open reminders" aria-label="Open reminders">♧</button>
+          <button class="primary-button" id="add-task-btn"><span>＋</span> Add Task</button>
+          <button class="secondary-button" id="logout-btn" type="button">Log Out</button>
+        </div>
+      </header>
+
+      <section class="page-section" id="page-dashboard">
+        <div class="welcome-banner">
+          <div class="welcome-copy">
+            <span class="banner-tag">✦ YOUR STUDY JOURNEY</span>
+            <h2>Make room for<br>great things.</h2>
+            <p>Organize your work, meet your deadlines, and celebrate every little win.</p>
+            <button class="banner-button" data-go="tasks">View my tasks <span>→</span></button>
+          </div>
+          <div class="banner-art" aria-hidden="true">
+            <div class="art-sun"></div>
+            <div class="art-book book-one"></div>
+            <div class="art-book book-two"></div>
+            <div class="art-book book-three"></div>
+            <div class="art-mug"><span>☕</span></div>
+            <div class="art-leaf">❧</div>
+            <div class="art-sparkle">✦</div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-icon green">☷</div>
+            <p>Total Tasks</p>
+            <strong id="total-tasks">0</strong>
+            <span>Everything on your list</span>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon amber">◷</div>
+            <p>Pending Tasks</p>
+            <strong id="pending-tasks">0</strong>
+            <span>Still to be completed</span>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon blue">✓</div>
+            <p>Completed</p>
+            <strong id="completed-tasks">0</strong>
+            <span>Look how far you've come</span>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon rose">↗</div>
+            <p>Completion Rate</p>
+            <strong id="completion-rate">0%</strong>
+            <span>Your progress so far</span>
+          </article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel task-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">STAY ON TRACK</p>
+                <h2>My Tasks</h2>
+              </div>
+              <button class="text-button" data-go="tasks">View all →</button>
+            </div>
+
+            <div class="filter-bar">
+              <input id="search-input" type="search" placeholder="Search your tasks..." aria-label="Search tasks">
+              <select id="status-filter" aria-label="Filter task status">
+                <option value="all">All tasks</option>
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+                <option value="overdue">Overdue</option>
+              </select>
+              <select id="sort-filter" aria-label="Sort tasks">
+                <option value="deadline">By deadline</option>
+                <option value="priority">By priority</option>
+                <option value="created">Recently added</option>
+              </select>
+            </div>
+
+            <div id="task-list" class="task-list"></div>
+            <p id="task-empty-hint" class="empty-hint">Your study table is clear. Add a task to get started!</p>
+          </section>
+
+          <section class="panel reminder-panel" id="reminder-area">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">DON'T FORGET</p>
+                <h2>Deadline Reminders</h2>
+              </div>
+              <span class="heading-icon">🔔</span>
+            </div>
+
+            <p class="panel-description">Keep an eye on what's coming up next.</p>
+            <div id="upcoming-reminders" class="reminder-list"></div>
+
+            <div class="reminder-settings">
+              <label class="setting-row" for="reminder-toggle">
+                <span>
+                  <strong>Enable reminders</strong>
+                  <small>Show upcoming deadline reminders</small>
+                </span>
+                <input type="checkbox" id="reminder-toggle" checked>
+              </label>
+
+              <label class="setting-row" for="reminder-days">
+                <span>
+                  <strong>Remind me before</strong>
+                  <small>Days before the deadline</small>
+                </span>
+                <select id="reminder-days">
+                  <option value="0">Due today</option>
+                  <option value="1" selected>1 day</option>
+                  <option value="2">2 days</option>
+                  <option value="3">3 days</option>
+                  <option value="7">7 days</option>
+                </select>
+              </label>
+
+              <button class="secondary-button full-button" id="enable-notifications">Enable browser notifications</button>
+              <p id="notification-status" class="small-status" role="status"></p>
+            </div>
+          </section>
+        </div>
+
+        <section class="panel dashboard-calendar">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">PLAN AHEAD</p>
+              <h2>Your Study Calendar</h2>
+            </div>
+            <button class="text-button" data-go="calendar">Full calendar →</button>
+          </div>
+          <div class="calendar-toolbar">
+            <button class="calendar-arrow" id="prev-month" aria-label="Previous month">‹</button>
+            <h3 id="calendar-month"></h3>
+            <button class="calendar-arrow" id="next-month" aria-label="Next month">›</button>
+          </div>
+          <div class="calendar-weekdays">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div class="calendar-grid" id="calendar-grid"></div>
+        </section>
+      </section>
+
+      <section class="page-section hidden" id="page-tasks" hidden>
+        <div class="page-intro">
+          <p class="eyebrow">YOUR WORKSPACE</p>
+          <h2>One task at a time.</h2>
+          <p>Keep everything organized in one place. Small steps add up.</p>
+        </div>
+        <section class="panel">
+          <div class="filter-bar">
+            <input id="tasks-search-input" type="search" placeholder="Search title, subject, or description..." aria-label="Search all tasks">
+            <select id="tasks-status-filter" aria-label="Filter all tasks">
+              <option value="all">All tasks</option>
+              <option value="pending">Pending</option>
+              <option value="completed">Completed</option>
+              <option value="overdue">Overdue</option>
+            </select>
+            <select id="tasks-sort-filter" aria-label="Sort all tasks">
+              <option value="deadline">By deadline</option>
+              <option value="priority">By priority</option>
+              <option value="created">Recently added</option>
+            </select>
+          </div>
+          <div id="all-task-list" class="task-list"></div>
+        </section>
+      </section>
+
+      <section class="page-section hidden" id="page-deadlines" hidden>
+        <div class="page-intro">
+          <p class="eyebrow">KEEP YOUR PROMISES</p>
+          <h2>Deadlines & Reminders</h2>
+          <p>Know what's due next and give yourself enough time to prepare.</p>
+        </div>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">COMING UP</p><h2>Your deadlines</h2></div>
+            <span class="heading-icon">🗓️</span>
+          </div>
+          <div id="deadline-list" class="task-list"></div>
+        </section>
+
+        <section class="panel settings-panel" id="deadline-reminder-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">MAKE IT YOURS</p><h2>Reminder settings</h2></div>
+            <span class="heading-icon">🔔</span>
+          </div>
+          <label class="setting-row" for="deadline-reminder-settings">
+            <span><strong>Deadline reminders</strong><small>Turn your reminders on or off</small></span>
+            <input type="checkbox" id="deadline-reminder-settings" checked>
+          </label>
+          <button class="secondary-button" id="deadlines-notification-btn">Enable browser notifications</button>
+        </section>
+      </section>
+
+      <section class="page-section hidden" id="page-calendar" hidden>
+        <div class="page-intro">
+          <p class="eyebrow">YOUR MONTH AT A GLANCE</p>
+          <h2>Study Calendar</h2>
+          <p>Select any date to see the tasks scheduled for that day.</p>
+        </div>
+        <section class="panel">
+          <div class="calendar-toolbar">
+            <button class="calendar-arrow" id="prev-month-page" aria-label="Previous month">‹</button>
+            <h3 id="calendar-month-page"></h3>
+            <button class="calendar-arrow" id="next-month-page" aria-label="Next month">›</button>
+          </div>
+          <div class="calendar-weekdays">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div class="calendar-grid large-calendar" id="calendar-grid-page"></div>
+          <div class="selected-date-panel">
+            <h3 id="selected-date-title">Tasks for selected date</h3>
+            <div id="selected-date-tasks" class="task-list"></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="page-section hidden" id="page-progress" hidden>
+        <div class="page-intro">
+          <p class="eyebrow">LOOK HOW FAR YOU'VE COME</p>
+          <h2>Your progress matters.</h2>
+          <p>Every completed task is a step toward your goals.</p>
+        </div>
+        <section class="panel progress-panel" id="progress-panel">
+          <div class="progress-top">
+            <div>
+              <p class="eyebrow">OVERALL COMPLETION</p>
+              <h2>Keep it going!</h2>
+              <p id="progress-details">0 completed · 0 remaining · 0 overdue</p>
+            </div>
+            <div class="progress-circle"><span id="progress-percent">0%</span></div>
+          </div>
+          <div class="progress-track"><div id="progress-bar-large" class="progress-fill"></div></div>
+          <div class="progress-breakdown">
+            <div><span class="legend-dot completed-dot"></span><span>Completed tasks</span><strong id="progress-completed">0</strong></div>
+            <div><span class="legend-dot pending-dot"></span><span>Pending tasks</span><strong id="progress-pending">0</strong></div>
+            <div><span class="legend-dot overdue-dot"></span><span>Overdue tasks</span><strong id="progress-overdue">0</strong></div>
+          </div>
+          <div class="motivation-card">
+            <span>🌱</span>
+            <div><strong>Progress over perfection.</strong><p>Do what you can today. Tomorrow is another chance to grow.</p></div>
+          </div>
+        </section>
+      </section>
+
+      <footer class="site-footer">
+        <span>📚 StudySync 2.0</span>
+        <span>Made for your next chapter.</span>
+      </footer>
+    </main>
+  </div>
+
+  <!-- ORIGINAL TASK MODAL -->
+  <div class="modal-overlay hidden" id="task-modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+      <div class="modal-heading">
+        <div><p class="eyebrow">MAKE A LITTLE PROGRESS</p><h2 id="modal-heading">Add a new task</h2></div>
+        <button class="icon-button close-button" type="button" id="close-modal" aria-label="Close">×</button>
+      </div>
+
+      <form id="task-form">
+        <input type="hidden" id="task-id">
+
+        <label for="task-title">Task title <span>*</span></label>
+        <input type="text" id="task-title" maxlength="120" placeholder="e.g. Finish ICT research" required>
+
+        <label for="task-subject">Subject</label>
+        <input type="text" id="task-subject" maxlength="80" placeholder="e.g. Empowerment Technologies">
+
+        <label for="task-description">Description or notes</label>
+        <textarea id="task-description" rows="3" maxlength="1000" placeholder="Add any details you need..."></textarea>
+
+        <div class="form-row">
+          <div>
+            <label for="task-deadline">Deadline <span>*</span></label>
+            <input type="date" id="task-deadline" required>
+          </div>
+          <div>
+            <label for="task-priority">Priority</label>
+            <select id="task-priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="task-status">Status</label>
+        <select id="task-status">
+          <option value="pending">Pending</option>
+          <option value="completed">Completed</option>
+        </select>
+
+        <div class="modal-actions">
+          <button class="secondary-button" type="button" id="cancel-modal">Cancel</button>
+          <button class="primary-button" type="submit">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

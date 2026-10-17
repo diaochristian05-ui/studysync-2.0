@@ -1,475 +1,389 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#174c3c">
-  <meta name="description" content="StudySync 2.0 — your cozy space to organize tasks, deadlines, and study progress.">
-  <title>StudySync 2.0 | Student Planner</title>
+  <meta name="theme-color" content="#f5f7ef">
+  <title>StudySync 2.0 — Student Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
 
-  <!-- LOGIN AND SIGN-UP SCREEN -->
+  <!-- LOGIN / SIGNUP -->
   <section id="auth-screen" class="auth-screen">
+    <div class="auth-decoration decoration-one"></div>
+    <div class="auth-decoration decoration-two"></div>
+
     <div class="auth-card">
-
-      <div class="auth-brand">
-        <div class="auth-brand-icon">📚</div>
-        <h1>StudySync <span>2.0</span></h1>
-        <p>Your cozy study corner</p>
-      </div>
-
-      <div class="auth-decoration">☕ ✦ 📖</div>
+      <a class="brand auth-brand" href="#" aria-label="StudySync home">
+        <span class="brand-icon">✳</span>
+        <span>StudySync<span class="brand-version"> 2.0</span></span>
+      </a>
 
       <div class="auth-heading">
-        <h2 id="auth-title">Welcome back!</h2>
-        <p id="auth-subtitle">Sign in to continue your study journey.</p>
+        <p class="eyebrow">YOUR PERSONAL STUDY SPACE</p>
+        <h1 id="auth-title">Welcome back.</h1>
+        <p id="auth-subtitle">A little progress every day goes a long way.</p>
       </div>
 
       <form id="login-form" class="auth-form">
         <label for="login-username">Username</label>
-        <input
-          type="text"
-          id="login-username"
-          placeholder="Enter your username"
-          autocomplete="username"
-          maxlength="30"
-          required
-        >
+        <input id="login-username" name="username" type="text"
+          placeholder="Enter your username" autocomplete="username" required>
 
         <label for="login-password">Password</label>
-        <input
-          type="password"
-          id="login-password"
-          placeholder="Enter your password"
-          autocomplete="current-password"
-          required
-        >
+        <input id="login-password" name="password" type="password"
+          placeholder="Enter your password" autocomplete="current-password" required>
 
-        <p id="login-error" class="auth-message" role="alert"></p>
-
-        <button type="submit" class="auth-submit">
-          Sign In
-        </button>
-
-        <p class="auth-switch">
-          Don't have an account?
-          <button type="button" id="show-signup">Create one</button>
-        </p>
+        <p id="login-error" class="form-error" role="alert" hidden></p>
+        <button class="btn btn-primary btn-full" type="submit">Log in <span>→</span></button>
       </form>
 
       <form id="signup-form" class="auth-form" hidden>
         <label for="signup-username">Choose a username</label>
-        <input
-          type="text"
-          id="signup-username"
-          placeholder="3–30 characters"
-          autocomplete="username"
-          minlength="3"
-          maxlength="30"
-          pattern="[A-Za-z0-9_-]+"
-          title="Use letters, numbers, underscores, or hyphens."
-          required
-        >
+        <input id="signup-username" name="username" type="text"
+          placeholder="3–30 letters, numbers, _ or -" minlength="3" maxlength="30"
+          autocomplete="username" required>
 
         <label for="signup-password">Create a password</label>
-        <input
-          type="password"
-          id="signup-password"
-          placeholder="At least 8 characters"
-          autocomplete="new-password"
-          minlength="8"
-          required
-        >
+        <input id="signup-password" name="password" type="password"
+          placeholder="At least 8 characters" minlength="8"
+          autocomplete="new-password" required>
 
-        <label for="signup-confirm-password">Confirm password</label>
-        <input
-          type="password"
-          id="signup-confirm-password"
-          placeholder="Enter your password again"
-          autocomplete="new-password"
-          minlength="8"
-          required
-        >
+        <label for="signup-confirm">Confirm password</label>
+        <input id="signup-confirm" name="confirm" type="password"
+          placeholder="Enter your password again" minlength="8"
+          autocomplete="new-password" required>
 
-        <p id="signup-error" class="auth-message" role="alert"></p>
-
-        <button type="submit" class="auth-submit">
-          Create Account
-        </button>
-
-        <p class="auth-switch">
-          Already have an account?
-          <button type="button" id="show-login">Sign in</button>
-        </p>
+        <p id="signup-error" class="form-error" role="alert" hidden></p>
+        <button class="btn btn-primary btn-full" type="submit">Create account <span>→</span></button>
       </form>
 
-      <p class="auth-footer">
-        🌿 A little progress every day.
+      <p class="auth-switch">
+        <span id="auth-switch-text">Don't have an account?</span>
+        <button id="show-signup" class="text-button" type="button">Sign up</button>
+        <button id="show-login" class="text-button" type="button" hidden>Log in</button>
       </p>
+      <p class="auth-note">Demo account data is stored in this browser.</p>
     </div>
   </section>
 
-  <!-- ORIGINAL STUDYSYNC 2.0 PLANNER -->
-  <div class="app-shell">
-
-    <aside class="sidebar" id="sidebar">
-      <a href="#" class="brand" aria-label="StudySync 2.0 home" data-go="dashboard">
-        <span class="brand-icon">📚</span>
-        <span class="brand-copy">
-          <strong>StudySync <span>2.0</span></strong>
-          <small>Your cozy study corner</small>
-        </span>
+  <!-- MAIN APP: hidden until a valid session is found -->
+  <div class="app-shell" hidden>
+    <aside class="sidebar">
+      <a class="brand sidebar-brand" href="#" aria-label="StudySync dashboard">
+        <span class="brand-icon">✳</span>
+        <span>StudySync<span class="brand-version"> 2.0</span></span>
       </a>
 
-      <div class="sidebar-label">STUDY SPACE</div>
-
-      <nav class="navigation" aria-label="Main navigation">
-        <button class="nav-link active" data-view="dashboard">
-          <span>⌂</span> Dashboard
+      <div class="sidebar-label">WORKSPACE</div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="dashboard" type="button">
+          <span class="nav-icon">⌂</span> Dashboard
         </button>
-        <button class="nav-link" data-view="tasks">
-          <span>☷</span> My Tasks
+        <button class="nav-link" data-view="tasks" type="button">
+          <span class="nav-icon">▤</span> My Tasks
+          <span id="nav-task-count" class="nav-count">0</span>
         </button>
-        <button class="nav-link" data-view="deadlines">
-          <span>◷</span> Deadlines
+        <button class="nav-link" data-view="deadlines" type="button">
+          <span class="nav-icon">◷</span> Deadlines
         </button>
-        <button class="nav-link" data-view="calendar">
-          <span>▦</span> Study Calendar
+        <button class="nav-link" data-view="calendar" type="button">
+          <span class="nav-icon">▦</span> Calendar
         </button>
-        <button class="nav-link" data-view="progress">
-          <span>↗</span> My Progress
+        <button class="nav-link" data-view="progress" type="button">
+          <span class="nav-icon">↗</span> My Progress
         </button>
       </nav>
 
-      <div class="sidebar-note">
-        <div class="note-illustration">☕</div>
-        <strong>A little progress every day.</strong>
-        <p>Your goals are worth showing up for. Take it one task at a time.</p>
-      </div>
-
-      <div class="sidebar-footer">
-        <span class="status-dot"></span>
-        <span>StudySync 2.0</span>
-        <span class="version-label">v2.0</span>
+      <div class="sidebar-bottom">
+        <div class="sidebar-tip">
+          <span class="tip-icon">✦</span>
+          <h3>One step at a time.</h3>
+          <p>You don't have to finish everything today. Just start somewhere.</p>
+        </div>
+        <div class="sidebar-account">
+          <div class="avatar" id="sidebar-avatar">S</div>
+          <div class="account-copy">
+            <strong id="sidebar-username">Student</strong>
+            <span>My study space</span>
+          </div>
+          <button id="logout-btn" class="icon-button logout-button"
+            type="button" title="Log out" aria-label="Log out">↪</button>
+        </div>
       </div>
     </aside>
 
     <main class="main-content">
       <header class="topbar">
         <div>
-          <p class="eyebrow">YOUR PERSONAL STUDY PLANNER</p>
-          <h1 id="page-title">Welcome back, learner ✦</h1>
-          <p class="today-label" id="today-label"></p>
-          <p class="account-label">Signed in as <strong id="current-account-label">Learner</strong></p>
+          <p class="eyebrow" id="today-label">YOUR STUDY SPACE</p>
+          <h1 id="page-title">Dashboard</h1>
         </div>
-
         <div class="topbar-actions">
-          <button class="icon-button" id="notification-shortcut" title="Open reminders" aria-label="Open reminders">♧</button>
-          <button class="primary-button" id="add-task-btn"><span>＋</span> Add Task</button>
-          <button class="secondary-button" id="logout-btn" type="button">Log Out</button>
+          <div class="date-pill"><span>◷</span> <span id="topbar-date"></span></div>
+          <button id="add-task-btn" class="btn btn-primary" type="button">
+            <span>＋</span> Add task
+          </button>
         </div>
       </header>
 
-      <section class="page-section" id="page-dashboard">
+      <!-- DASHBOARD -->
+      <section id="page-dashboard" class="page-section">
         <div class="welcome-banner">
           <div class="welcome-copy">
-            <span class="banner-tag">✦ YOUR STUDY JOURNEY</span>
-            <h2>Make room for<br>great things.</h2>
-            <p>Organize your work, meet your deadlines, and celebrate every little win.</p>
-            <button class="banner-button" data-go="tasks">View my tasks <span>→</span></button>
+            <p class="eyebrow">A FRESH START</p>
+            <h2 id="welcome-title">Let's make today count.</h2>
+            <p>Stay organized, focus on what matters, and celebrate every little win.</p>
+            <button class="btn btn-light" data-go="tasks" type="button">View my tasks <span>→</span></button>
           </div>
-          <div class="banner-art" aria-hidden="true">
+          <div class="welcome-art" aria-hidden="true">
             <div class="art-sun"></div>
-            <div class="art-book book-one"></div>
-            <div class="art-book book-two"></div>
-            <div class="art-book book-three"></div>
-            <div class="art-mug"><span>☕</span></div>
-            <div class="art-leaf">❧</div>
-            <div class="art-sparkle">✦</div>
+            <div class="art-book book-back"></div>
+            <div class="art-book book-front"><span>✳</span><small>YOUR<br>NEXT CHAPTER</small></div>
+            <div class="art-sparkle sparkle-a">✦</div>
+            <div class="art-sparkle sparkle-b">✧</div>
           </div>
         </div>
 
         <div class="stats-grid">
           <article class="stat-card">
-            <div class="stat-icon green">☷</div>
-            <p>Total Tasks</p>
-            <strong id="total-tasks">0</strong>
-            <span>Everything on your list</span>
+            <div class="stat-icon stat-icon-green">▤</div>
+            <p>Total tasks</p>
+            <strong id="stat-total">0</strong>
+            <span>All your study tasks</span>
           </article>
           <article class="stat-card">
-            <div class="stat-icon amber">◷</div>
-            <p>Pending Tasks</p>
-            <strong id="pending-tasks">0</strong>
-            <span>Still to be completed</span>
+            <div class="stat-icon stat-icon-yellow">◷</div>
+            <p>Pending</p>
+            <strong id="stat-pending">0</strong>
+            <span>Still on your list</span>
           </article>
           <article class="stat-card">
-            <div class="stat-icon blue">✓</div>
+            <div class="stat-icon stat-icon-blue">✓</div>
             <p>Completed</p>
-            <strong id="completed-tasks">0</strong>
-            <span>Look how far you've come</span>
+            <strong id="stat-completed">0</strong>
+            <span>Look at you go!</span>
           </article>
           <article class="stat-card">
-            <div class="stat-icon rose">↗</div>
-            <p>Completion Rate</p>
-            <strong id="completion-rate">0%</strong>
+            <div class="stat-icon stat-icon-purple">↗</div>
+            <p>Completion rate</p>
+            <strong id="stat-rate">0%</strong>
             <span>Your progress so far</span>
           </article>
         </div>
 
-        <div class="content-grid">
-          <section class="panel task-panel">
+        <div class="dashboard-columns">
+          <section class="panel">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">STAY ON TRACK</p>
-                <h2>My Tasks</h2>
+                <h2>Upcoming tasks</h2>
               </div>
-              <button class="text-button" data-go="tasks">View all →</button>
+              <button class="text-button" data-go="tasks" type="button">View all →</button>
             </div>
-
-            <div class="filter-bar">
-              <input id="search-input" type="search" placeholder="Search your tasks..." aria-label="Search tasks">
-              <select id="status-filter" aria-label="Filter task status">
-                <option value="all">All tasks</option>
-                <option value="pending">Pending</option>
-                <option value="completed">Completed</option>
-                <option value="overdue">Overdue</option>
-              </select>
-              <select id="sort-filter" aria-label="Sort tasks">
-                <option value="deadline">By deadline</option>
-                <option value="priority">By priority</option>
-                <option value="created">Recently added</option>
-              </select>
+            <div id="dashboard-task-list" class="task-list"></div>
+            <div id="dashboard-empty" class="empty-state" hidden>
+              <span>✦</span>
+              <h3>Nothing on your list yet</h3>
+              <p>Add a task to get your study plan started.</p>
+              <button class="btn btn-primary" data-add-task type="button">Create a task</button>
             </div>
-
-            <div id="task-list" class="task-list"></div>
-            <p id="task-empty-hint" class="empty-hint">Your study table is clear. Add a task to get started!</p>
           </section>
 
-          <section class="panel reminder-panel" id="reminder-area">
+          <section class="panel progress-panel">
             <div class="panel-heading">
               <div>
-                <p class="eyebrow">DON'T FORGET</p>
-                <h2>Deadline Reminders</h2>
+                <p class="eyebrow">KEEP GOING</p>
+                <h2>Your progress</h2>
               </div>
-              <span class="heading-icon">🔔</span>
+              <span class="soft-badge">This account</span>
             </div>
-
-            <p class="panel-description">Keep an eye on what's coming up next.</p>
-            <div id="upcoming-reminders" class="reminder-list"></div>
-
-            <div class="reminder-settings">
-              <label class="setting-row" for="reminder-toggle">
-                <span>
-                  <strong>Enable reminders</strong>
-                  <small>Show upcoming deadline reminders</small>
-                </span>
-                <input type="checkbox" id="reminder-toggle" checked>
-              </label>
-
-              <label class="setting-row" for="reminder-days">
-                <span>
-                  <strong>Remind me before</strong>
-                  <small>Days before the deadline</small>
-                </span>
-                <select id="reminder-days">
-                  <option value="0">Due today</option>
-                  <option value="1" selected>1 day</option>
-                  <option value="2">2 days</option>
-                  <option value="3">3 days</option>
-                  <option value="7">7 days</option>
-                </select>
-              </label>
-
-              <button class="secondary-button full-button" id="enable-notifications">Enable browser notifications</button>
-              <p id="notification-status" class="small-status" role="status"></p>
+            <div class="progress-ring" id="progress-ring">
+              <div class="progress-ring-inner">
+                <strong id="progress-percent">0%</strong>
+                <span>completed</span>
+              </div>
+            </div>
+            <p class="progress-message" id="progress-message">Every small step counts.</p>
+            <div class="progress-legend">
+              <div><span class="legend-dot dot-green"></span> Completed <strong id="progress-completed">0</strong></div>
+              <div><span class="legend-dot dot-yellow"></span> Pending <strong id="progress-pending">0</strong></div>
+              <div><span class="legend-dot dot-red"></span> Overdue <strong id="progress-overdue">0</strong></div>
             </div>
           </section>
         </div>
 
-        <section class="panel dashboard-calendar">
+        <section class="panel mini-calendar-panel">
           <div class="panel-heading">
             <div>
               <p class="eyebrow">PLAN AHEAD</p>
-              <h2>Your Study Calendar</h2>
+              <h2>This month's calendar</h2>
             </div>
-            <button class="text-button" data-go="calendar">Full calendar →</button>
+            <button class="text-button" data-go="calendar" type="button">Open calendar →</button>
           </div>
+          <div id="calendar-grid" class="calendar-grid calendar-compact"></div>
+        </section>
+      </section>
+
+      <!-- TASKS -->
+      <section id="page-tasks" class="page-section" hidden>
+        <div class="section-intro">
+          <div><h2>My tasks</h2><p>Keep everything you need to do in one place.</p></div>
+          <button class="btn btn-primary" data-add-task type="button">＋ Add task</button>
+        </div>
+        <div class="filter-bar">
+          <button class="filter-button active" data-filter="all" type="button">All tasks</button>
+          <button class="filter-button" data-filter="pending" type="button">Pending</button>
+          <button class="filter-button" data-filter="completed" type="button">Completed</button>
+          <button class="filter-button" data-filter="overdue" type="button">Overdue</button>
+        </div>
+        <div id="all-task-list" class="task-list task-list-large"></div>
+        <div id="tasks-empty" class="empty-state" hidden>
+          <span>✦</span><h3>No tasks found</h3><p>Try another filter or create a new task.</p>
+          <button class="btn btn-primary" data-add-task type="button">Create a task</button>
+        </div>
+      </section>
+
+      <!-- DEADLINES -->
+      <section id="page-deadlines" class="page-section" hidden>
+        <div class="section-intro">
+          <div><h2>Deadlines</h2><p>See what is due soon and plan your time.</p></div>
+          <button class="btn btn-primary" data-add-task type="button">＋ Add task</button>
+        </div>
+        <div class="deadline-summary">
+          <div class="deadline-summary-card"><span>Due today</span><strong id="due-today-count">0</strong></div>
+          <div class="deadline-summary-card"><span>Due this week</span><strong id="due-week-count">0</strong></div>
+          <div class="deadline-summary-card"><span>Overdue</span><strong id="deadline-overdue-count">0</strong></div>
+        </div>
+        <div id="deadline-list" class="task-list task-list-large"></div>
+        <div id="deadlines-empty" class="empty-state" hidden>
+          <span>☀</span><h3>You're all caught up</h3><p>Tasks with deadlines will appear here.</p>
+        </div>
+      </section>
+
+      <!-- CALENDAR -->
+      <section id="page-calendar" class="page-section" hidden>
+        <div class="section-intro">
+          <div><h2>Study calendar</h2><p>See your deadlines and tasks by date.</p></div>
+          <button class="btn btn-primary" data-add-task type="button">＋ Add task</button>
+        </div>
+        <div class="panel calendar-panel">
           <div class="calendar-toolbar">
-            <button class="calendar-arrow" id="prev-month" aria-label="Previous month">‹</button>
-            <h3 id="calendar-month"></h3>
-            <button class="calendar-arrow" id="next-month" aria-label="Next month">›</button>
+            <button id="calendar-prev" class="icon-button" type="button" aria-label="Previous month">←</button>
+            <h3 id="calendar-month-title">Month Year</h3>
+            <button id="calendar-next" class="icon-button" type="button" aria-label="Next month">→</button>
+            <button id="calendar-today" class="btn btn-light btn-small" type="button">Today</button>
           </div>
-          <div class="calendar-weekdays">
-            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-          </div>
-          <div class="calendar-grid" id="calendar-grid"></div>
+          <div id="calendar-grid-page" class="calendar-grid calendar-full"></div>
+        </div>
+        <section class="panel selected-date-panel">
+          <div class="panel-heading"><h2 id="selected-date-title">Tasks for this day</h2></div>
+          <div id="selected-date-tasks" class="task-list"></div>
+          <p id="selected-date-empty" class="muted-text">Select a date to see its tasks.</p>
         </section>
       </section>
 
-      <section class="page-section hidden" id="page-tasks" hidden>
-        <div class="page-intro">
-          <p class="eyebrow">YOUR WORKSPACE</p>
-          <h2>One task at a time.</h2>
-          <p>Keep everything organized in one place. Small steps add up.</p>
+      <!-- PROGRESS -->
+      <section id="page-progress" class="page-section" hidden>
+        <div class="section-intro">
+          <div><h2>My progress</h2><p>Every completed task is a step forward.</p></div>
+        </div>
+        <div class="progress-overview panel">
+          <div>
+            <p class="eyebrow">YOUR OVERALL PROGRESS</p>
+            <h2 id="progress-heading">You're building good habits.</h2>
+            <p id="progress-description">Keep showing up and doing your best.</p>
+            <div class="progress-bar-track"><div id="progress-bar-large" class="progress-bar-fill"></div></div>
+            <span id="progress-bar-label" class="muted-text">0 of 0 tasks completed</span>
+          </div>
+          <div class="large-progress-number" id="progress-large-percent">0%</div>
+        </div>
+        <div class="stats-grid progress-stats">
+          <article class="stat-card"><div class="stat-icon stat-icon-green">✓</div><p>Completed</p><strong id="progress-page-completed">0</strong><span>Finished tasks</span></article>
+          <article class="stat-card"><div class="stat-icon stat-icon-yellow">◷</div><p>Pending</p><strong id="progress-page-pending">0</strong><span>Tasks to work on</span></article>
+          <article class="stat-card"><div class="stat-icon stat-icon-red">!</div><p>Overdue</p><strong id="progress-page-overdue">0</strong><span>Past their deadline</span></article>
+          <article class="stat-card"><div class="stat-icon stat-icon-blue">▤</div><p>Total tasks</p><strong id="progress-page-total">0</strong><span>Across your planner</span></article>
         </div>
         <section class="panel">
-          <div class="filter-bar">
-            <input id="tasks-search-input" type="search" placeholder="Search title, subject, or description..." aria-label="Search all tasks">
-            <select id="tasks-status-filter" aria-label="Filter all tasks">
-              <option value="all">All tasks</option>
-              <option value="pending">Pending</option>
-              <option value="completed">Completed</option>
-              <option value="overdue">Overdue</option>
-            </select>
-            <select id="tasks-sort-filter" aria-label="Sort all tasks">
-              <option value="deadline">By deadline</option>
-              <option value="priority">By priority</option>
-              <option value="created">Recently added</option>
-            </select>
-          </div>
-          <div id="all-task-list" class="task-list"></div>
+          <div class="panel-heading"><div><p class="eyebrow">A LITTLE AT A TIME</p><h2>Recently completed</h2></div></div>
+          <div id="completed-task-list" class="task-list"></div>
+          <p id="completed-empty" class="muted-text">Completed tasks will appear here.</p>
         </section>
       </section>
 
-      <section class="page-section hidden" id="page-deadlines" hidden>
-        <div class="page-intro">
-          <p class="eyebrow">KEEP YOUR PROMISES</p>
-          <h2>Deadlines & Reminders</h2>
-          <p>Know what's due next and give yourself enough time to prepare.</p>
-        </div>
-
-        <section class="panel">
-          <div class="panel-heading">
-            <div><p class="eyebrow">COMING UP</p><h2>Your deadlines</h2></div>
-            <span class="heading-icon">🗓️</span>
-          </div>
-          <div id="deadline-list" class="task-list"></div>
-        </section>
-
-        <section class="panel settings-panel" id="deadline-reminder-panel">
-          <div class="panel-heading">
-            <div><p class="eyebrow">MAKE IT YOURS</p><h2>Reminder settings</h2></div>
-            <span class="heading-icon">🔔</span>
-          </div>
-          <label class="setting-row" for="deadline-reminder-settings">
-            <span><strong>Deadline reminders</strong><small>Turn your reminders on or off</small></span>
-            <input type="checkbox" id="deadline-reminder-settings" checked>
-          </label>
-          <button class="secondary-button" id="deadlines-notification-btn">Enable browser notifications</button>
-        </section>
-      </section>
-
-      <section class="page-section hidden" id="page-calendar" hidden>
-        <div class="page-intro">
-          <p class="eyebrow">YOUR MONTH AT A GLANCE</p>
-          <h2>Study Calendar</h2>
-          <p>Select any date to see the tasks scheduled for that day.</p>
-        </div>
-        <section class="panel">
-          <div class="calendar-toolbar">
-            <button class="calendar-arrow" id="prev-month-page" aria-label="Previous month">‹</button>
-            <h3 id="calendar-month-page"></h3>
-            <button class="calendar-arrow" id="next-month-page" aria-label="Next month">›</button>
-          </div>
-          <div class="calendar-weekdays">
-            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-          </div>
-          <div class="calendar-grid large-calendar" id="calendar-grid-page"></div>
-          <div class="selected-date-panel">
-            <h3 id="selected-date-title">Tasks for selected date</h3>
-            <div id="selected-date-tasks" class="task-list"></div>
-          </div>
-        </section>
-      </section>
-
-      <section class="page-section hidden" id="page-progress" hidden>
-        <div class="page-intro">
-          <p class="eyebrow">LOOK HOW FAR YOU'VE COME</p>
-          <h2>Your progress matters.</h2>
-          <p>Every completed task is a step toward your goals.</p>
-        </div>
-        <section class="panel progress-panel" id="progress-panel">
-          <div class="progress-top">
-            <div>
-              <p class="eyebrow">OVERALL COMPLETION</p>
-              <h2>Keep it going!</h2>
-              <p id="progress-details">0 completed · 0 remaining · 0 overdue</p>
-            </div>
-            <div class="progress-circle"><span id="progress-percent">0%</span></div>
-          </div>
-          <div class="progress-track"><div id="progress-bar-large" class="progress-fill"></div></div>
-          <div class="progress-breakdown">
-            <div><span class="legend-dot completed-dot"></span><span>Completed tasks</span><strong id="progress-completed">0</strong></div>
-            <div><span class="legend-dot pending-dot"></span><span>Pending tasks</span><strong id="progress-pending">0</strong></div>
-            <div><span class="legend-dot overdue-dot"></span><span>Overdue tasks</span><strong id="progress-overdue">0</strong></div>
-          </div>
-          <div class="motivation-card">
-            <span>🌱</span>
-            <div><strong>Progress over perfection.</strong><p>Do what you can today. Tomorrow is another chance to grow.</p></div>
-          </div>
-        </section>
-      </section>
-
-      <footer class="site-footer">
-        <span>📚 StudySync 2.0</span>
-        <span>Made for your next chapter.</span>
-      </footer>
+      <footer class="app-footer">Made for your next chapter <span>✳</span></footer>
     </main>
   </div>
 
-  <!-- ORIGINAL TASK MODAL -->
-  <div class="modal-overlay hidden" id="task-modal" hidden>
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+  <!-- ADD / EDIT TASK MODAL -->
+  <div id="task-modal" class="modal-backdrop" hidden>
+    <section class="task-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <div class="modal-heading">
-        <div><p class="eyebrow">MAKE A LITTLE PROGRESS</p><h2 id="modal-heading">Add a new task</h2></div>
-        <button class="icon-button close-button" type="button" id="close-modal" aria-label="Close">×</button>
+        <div><p class="eyebrow">PLAN YOUR NEXT STEP</p><h2 id="modal-title">Create a task</h2></div>
+        <button id="close-modal-btn" class="icon-button" type="button" aria-label="Close dialog">×</button>
       </div>
-
       <form id="task-form">
-        <input type="hidden" id="task-id">
+        <input id="task-id" type="hidden">
+        <label for="task-title">Task title <span class="required-mark">*</span></label>
+        <input id="task-title" type="text" maxlength="120" placeholder="e.g. Finish ICT research" required>
 
-        <label for="task-title">Task title <span>*</span></label>
-        <input type="text" id="task-title" maxlength="120" placeholder="e.g. Finish ICT research" required>
+        <div class="form-two-columns">
+          <div><label for="task-subject">Subject / category</label>
+            <input id="task-subject" type="text" maxlength="60" placeholder="e.g. ICT"></div>
+          <div><label for="task-deadline">Deadline</label>
+            <input id="task-deadline" type="date"></div>
+        </div>
 
-        <label for="task-subject">Subject</label>
-        <input type="text" id="task-subject" maxlength="80" placeholder="e.g. Empowerment Technologies">
+        <label for="task-description">Notes</label>
+        <textarea id="task-description" rows="3" maxlength="1000" placeholder="Add details or reminders..."></textarea>
 
-        <label for="task-description">Description or notes</label>
-        <textarea id="task-description" rows="3" maxlength="1000" placeholder="Add any details you need..."></textarea>
-
-        <div class="form-row">
-          <div>
-            <label for="task-deadline">Deadline <span>*</span></label>
-            <input type="date" id="task-deadline" required>
-          </div>
-          <div>
-            <label for="task-priority">Priority</label>
+        <div class="form-two-columns">
+          <div><label for="task-priority">Priority</label>
             <select id="task-priority">
               <option value="low">Low</option>
               <option value="medium" selected>Medium</option>
               <option value="high">High</option>
-            </select>
-          </div>
+            </select></div>
+          <div><label for="task-status">Status</label>
+            <select id="task-status">
+              <option value="pending" selected>Pending</option>
+              <option value="completed">Completed</option>
+            </select></div>
         </div>
 
-        <label for="task-status">Status</label>
-        <select id="task-status">
-          <option value="pending">Pending</option>
-          <option value="completed">Completed</option>
-        </select>
-
+        <p id="task-form-error" class="form-error" role="alert" hidden></p>
         <div class="modal-actions">
-          <button class="secondary-button" type="button" id="cancel-modal">Cancel</button>
-          <button class="primary-button" type="submit">Save Task</button>
+          <button id="cancel-task-btn" class="btn btn-light" type="button">Cancel</button>
+          <button id="save-task-btn" class="btn btn-primary" type="submit">Save task</button>
         </div>
       </form>
-    </div>
+    </section>
   </div>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <!-- REMINDER SETTINGS -->
+  <section id="reminder-panel" class="reminder-panel" hidden>
+    <div class="reminder-panel-heading">
+      <strong>Reminder settings</strong>
+      <button id="close-reminder-panel" class="icon-button" type="button" aria-label="Close reminder settings">×</button>
+    </div>
+    <label class="toggle-row" for="reminder-toggle">
+      <span><strong>Deadline reminders</strong><small>Show reminders while this page is open.</small></span>
+      <input id="reminder-toggle" type="checkbox" checked>
+    </label>
+    <p class="muted-text reminder-help">Reminders work in this browser while StudySync is open. They are not guaranteed push notifications.</p>
+  </section>
 
-  <script src="dashboard-effects.js"></script>
+  <button id="notification-shortcut" class="floating-reminder-button" type="button"
+    aria-label="Open reminder settings" title="Reminder settings">♧</button>
+
+  <!-- TOAST MESSAGE -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
 </body>
 </html>

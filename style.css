@@ -1833,3 +1833,160 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ========================================
+   STUDYSYNC 2.0 — COLORFUL TASKS & PROGRESS
+======================================== */
+
+:root {
+  --ss-green: #238653;
+  --ss-green-light: #e5f5e9;
+  --ss-blue: #3974d5;
+  --ss-blue-light: #e8f0ff;
+  --ss-purple: #8752c7;
+  --ss-purple-light: #f2eaff;
+  --ss-orange: #b76a13;
+  --ss-orange-light: #fff0d8;
+  --ss-red: #c74747;
+  --ss-red-light: #ffe8e8;
+}
+
+/* Completed task cards */
+.task-item.completed {
+  background: var(--ss-green-light);
+  border-color: #a9d9b8;
+  box-shadow: inset 4px 0 0 var(--ss-green);
+}
+
+.task-item.completed .item-title {
+  color: #216440;
+  text-decoration: line-through;
+  text-decoration-color: #69a982;
+}
+
+.task-item.completed .small-btn[data-action="toggle"] {
+  background: var(--ss-green);
+  color: white;
+  border-color: var(--ss-green);
+}
+
+/* Overdue tasks */
+.task-item.overdue {
+  background: var(--ss-red-light);
+  border-color: #efb5b5;
+  box-shadow: inset 4px 0 0 var(--ss-red);
+}
+
+.task-item.overdue .item-meta {
+  color: #a73535;
+}
+
+/* Priority badges */
+.priority.high {
+  background: #ffe2e2;
+  color: #b52f39;
+  border: 1px solid #f3b6bb;
+}
+
+.priority.medium {
+  background: var(--ss-orange-light);
+  color: #95540d;
+  border: 1px solid #f1d19b;
+}
+
+.priority.low {
+  background: var(--ss-green-light);
+  color: #216440;
+  border: 1px solid #b8dec3;
+}
+
+/* Main completion progress bar */
+#progress-bar-large {
+  background: linear-gradient(90deg, #36a66b, #65c98c);
+  border-radius: 999px;
+  transition: width 0.65s ease;
+  min-height: 8px;
+}
+
+/* Progress numbers */
+#progress-percent {
+  color: var(--ss-green);
+  font-weight: 800;
+}
+
+#progress-completed {
+  color: var(--ss-green);
+  font-weight: 700;
+}
+
+#progress-pending {
+  color: var(--ss-blue);
+  font-weight: 700;
+}
+
+#progress-overdue {
+  color: var(--ss-red);
+  font-weight: 700;
+}
+
+/* Calendar task labels */
+.calendar-task.done {
+  background: #d9f1e1;
+  color: #216440;
+  border-left: 3px solid var(--ss-green);
+}
+
+.calendar-task.overdue {
+  background: #ffe0e0;
+  color: #a73535;
+  border-left: 3px solid var(--ss-red);
+}
+
+/* Dashboard statistic cards */
+.stat-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(42, 83, 59, 0.12);
+}
+
+.stat-card:nth-child(1) {
+  border-top: 3px solid var(--ss-blue);
+}
+
+.stat-card:nth-child(2) {
+  border-top: 3px solid var(--ss-orange);
+}
+
+.stat-card:nth-child(3) {
+  border-top: 3px solid var(--ss-green);
+}
+
+.stat-card:nth-child(4) {
+  border-top: 3px solid var(--ss-purple);
+}
+
+/* Button feedback */
+.small-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.97);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
